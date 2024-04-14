@@ -1,4 +1,5 @@
 import 'package:ecommerce_c10_online/core/api/api_manager.dart';
+import 'package:ecommerce_c10_online/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,9 @@ void main() {
   Bloc.observer = MyBlocObserver();
   configureDependencies();
   ApiManager.init();
-  runApp(const MyApp());
+  runApp(BlocProvider(
+      create: (BuildContext context) => HomeViewModel(),
+      child: const MyApp()));
 }
 
 

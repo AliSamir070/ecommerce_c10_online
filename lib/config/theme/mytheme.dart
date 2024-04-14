@@ -4,6 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyTheme{
   static ThemeData lightTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      scrolledUnderElevation: 0
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: ColorsManager.primaryColor,
+      selectedItemColor: ColorsManager.primaryColor,
+      unselectedItemColor: ColorsManager.primaryColor,
+      type: BottomNavigationBarType.fixed
+    ),
     colorScheme: ColorScheme.fromSeed(
         seedColor:ColorsManager.primaryColor,
         primary: ColorsManager.primaryColor

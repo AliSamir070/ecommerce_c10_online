@@ -5,6 +5,7 @@ import 'package:ecommerce_c10_online/core/utils/strings_manager.dart';
 import 'package:ecommerce_c10_online/presentation/home/tabs/home_tab/viewmodel/home_tab_viewModel.dart';
 import 'package:ecommerce_c10_online/presentation/home/tabs/home_tab/widgets/brands_list_widget.dart';
 import 'package:ecommerce_c10_online/presentation/home/tabs/home_tab/widgets/categories_list_widget.dart';
+import 'package:ecommerce_c10_online/presentation/home/tabs/home_tab/widgets/most_selling_products_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +62,13 @@ class HomeTab extends StatelessWidget {
               child: Text(StringsManager.brands,
                 style: Theme.of(context).textTheme.headlineMedium,),
             ),
-            SliverToBoxAdapter(child: BrandsListWidget())
+            SliverToBoxAdapter(child: BrandsListWidget()),
+            SliverToBoxAdapter(child: SizedBox(height: 24.h,)),
+            SliverToBoxAdapter(
+              child: Text(StringsManager.mostSellingProducts,
+                style: Theme.of(context).textTheme.headlineMedium,),
+            ),
+            SliverToBoxAdapter(child: MostSellingProductsListWidget(),)
           ],
         ),
       ),

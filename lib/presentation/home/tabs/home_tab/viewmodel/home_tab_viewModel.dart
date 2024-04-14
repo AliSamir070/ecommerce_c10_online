@@ -1,17 +1,20 @@
 import 'package:ecommerce_c10_online/domain/usecases/get_brands_use_case.dart';
+import 'package:ecommerce_c10_online/domain/usecases/get_most_selling_products_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../domain/entities/brand_entity/BrandEntity.dart';
 import '../../../../../domain/entities/category_entity/CategoryEntity.dart';
+import '../../../../../domain/entities/product_entity/ProductEntity.dart';
 import '../../../../../domain/usecases/get_categories_use_case.dart';
 @injectable
 class HomeTabViewModel extends Cubit<HomeTabStates> {
   @factoryMethod
-  HomeTabViewModel(this.categoriesUseCase , this.brandsUseCase) : super(HomeTabInitialState());
+  HomeTabViewModel(this.categoriesUseCase , this.brandsUseCase,this.mostSellingProductsUseCase) : super(HomeTabInitialState());
 
   GetCategoriesUseCase categoriesUseCase;
   GetBrandsUseCase brandsUseCase;
+  GetMostSellingProductsUseCase mostSellingProductsUseCase;
   static HomeTabViewModel get(context) => BlocProvider.of(context);
 
   getCategories() async {
@@ -31,6 +34,16 @@ class HomeTabViewModel extends Cubit<HomeTabStates> {
       emit(BrandsSuccessState(brands));
     }, (error) {
       emit(BrandsErrorState(error));
+    });
+  }
+
+  getMostSellingProducts()async{
+    emit(MostSellingProductsLoadingState());
+    var result = await mostSellingProductsUseCase.call();
+    result.fold((products){
+      emit(MostSellingProductsSuccessState(products));
+    }, (error){
+      emit(MostSellingProductsErrorState(error));
     });
   }
 }
@@ -61,4 +74,13 @@ class BrandsSuccessState extends HomeTabStates{
 class BrandsErrorState extends HomeTabStates{
   String error;
   BrandsErrorState(this.error);
+}
+class MostSellingProductsLoadingState extends HomeTabStates{}
+class MostSellingProductsSuccessState extends HomeTabStates{
+  List<ProductEntity> products;
+  MostSellingProductsSuccessState(this.products);
+}
+class MostSellingProductsErrorState extends HomeTabStates{
+  String error;
+  MostSellingProductsErrorState(this.error);
 }

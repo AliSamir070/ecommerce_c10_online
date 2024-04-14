@@ -41,6 +41,7 @@ dependencies:
   carousel_slider: ^4.2.1
   dio: ^5.4.2+1
   dartz: ^0.10.1
+  flutter_svg: ^2.0.10+1
   # add injectable to your dependencies
   injectable:
   # add get_it
