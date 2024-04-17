@@ -29,6 +29,16 @@ class MyTheme{
         fontSize: 18.sp,
         fontWeight: FontWeight.w500,
         color: ColorsManager.headlineColor
+      ),
+      titleMedium: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 24.sp,
+        color: Colors.white
+      ),
+      titleSmall: TextStyle(
+        fontWeight: FontWeight.w300,
+        fontSize: 18.sp,
+        color: Colors.black
       )
     )
   );

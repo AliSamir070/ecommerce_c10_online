@@ -30,6 +30,12 @@ static List<Widget> tabs = [
               width: 66.w,
               height: 22.h,
             ),
+            actions: [
+              IconButton(
+                  onPressed: (){},
+                  icon: SvgPicture.asset(AssetsManager.cart)
+              )
+            ],
           ),
           bottomNavigationBar: ClipRRect(
             borderRadius: BorderRadius.circular(40.r),

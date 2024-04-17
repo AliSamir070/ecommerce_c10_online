@@ -14,4 +14,5 @@ class AssetsManager{
   static const String profileUnSelected = "assets/images/profile_unselected.svg";
   static const String homeUnSelected = "assets/images/home_unselected.svg";
   static const String route = "assets/images/route.svg";
+  static const String cart = "assets/images/cart.svg";
 }
