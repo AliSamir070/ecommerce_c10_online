@@ -1,6 +1,11 @@
+import 'package:ecommerce_c10_online/core/DI/di.dart';
+import 'package:ecommerce_c10_online/core/local/PrefsHelper.dart';
+import 'package:ecommerce_c10_online/presentation/register/view_model/SignUpVIewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../core/constants.dart';
 import '../../core/resuable_components/custom_button.dart';
@@ -44,7 +49,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (context) => getIt<SignUpViewModel>(),
+  child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){
@@ -137,17 +144,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: CustomButton(
+                  child: BlocConsumer<SignUpViewModel, SignUpStates>(
+                      listener: (context, state) {
+                        if(state is SignUpSuccessState){
+                          PrefsHelper.saveToken(state.authEntity.token??"");
+                          Fluttertoast.showToast(
+                              msg: "Account created successfully",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                          Navigator.pushNamedAndRemoveUntil(context, RoutesManager.homeRouteName, (route) => false);
+                        }
+                        if(state is SignUpErrorState){
+                          Fluttertoast.showToast(
+                              msg: state.error,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if(state is SignUpLoadingState){
+                          return Center(child: CircularProgressIndicator(color: Colors.white,),);
+                        }
+                        return CustomButton(
                       title: StringsManager.signup,
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
-                      }),
+                        if (formKey.currentState!.validate()) {
+                          SignUpViewModel.get(context).SignUp(
+                              fullName: fullNameController.text,
+                              mobile: mobileController.text,
+                              email: emailController.text,
+                              password: passwordController.text
+                          );
+                        }
+                      });
+  },
+),
                 ),
               ],
             ),
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

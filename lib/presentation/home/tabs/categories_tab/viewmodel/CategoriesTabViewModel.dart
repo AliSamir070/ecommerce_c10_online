@@ -14,21 +14,33 @@ class CategoriesTabViewModel extends Cubit<CategoriesTabStates>{
   GetCategoriesUseCase getCategoriesUseCase;
   GetSubcategoriesOfSpecificCategoryUseCase subCategoriesUseCase;
   getCategories()async{
-    emit(GetCategoriesLoadingState());
+    if(!isClosed){
+      emit(GetCategoriesLoadingState());
+    }
     var result = await getCategoriesUseCase.call();
     result?.fold((categories){
-      emit(GetCategoriesSuccessState(categories));
+      if(!isClosed){
+        emit(GetCategoriesSuccessState(categories));
+      }
     }, (error) {
-      emit(GetCategoriesErrorState(error));
+      if(!isClosed){
+        emit(GetCategoriesErrorState(error));
+      }
     });
   }
   getSubCategories(String categoryId)async{
-    emit(SubCategoriesLoadingState());
+    if(!isClosed){
+      emit(SubCategoriesLoadingState());
+    }
     var result = await subCategoriesUseCase.call(categoryId);
     result.fold((subcategories){
-      emit(SubCategoriesSuccessState(subcategories));
+      if(!isClosed){
+        emit(SubCategoriesSuccessState(subcategories));
+      }
     }, (error){
-      emit(SubCategoriesErrorState(error));
+      if(!isClosed){
+        emit(SubCategoriesErrorState(error));
+      }
     });
   }
 

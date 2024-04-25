@@ -1,3 +1,5 @@
+import 'package:ecommerce_c10_online/core/local/PrefsHelper.dart';
+import 'package:ecommerce_c10_online/core/utils/routes_manager.dart';
 import 'package:ecommerce_c10_online/presentation/home/home_view_model.dart';
 import 'package:ecommerce_c10_online/presentation/home/tabs/categories_tab/categories_tab.dart';
 import 'package:ecommerce_c10_online/presentation/home/tabs/home_tab/home_tab.dart';
@@ -18,6 +20,7 @@ static List<Widget> tabs = [
   WhishlistTab(),
   ProfileTab()
 ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeViewModel, HomeStates>(
@@ -32,9 +35,15 @@ static List<Widget> tabs = [
             ),
             actions: [
               IconButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context, RoutesManager.cartRouteName);
+                  },
                   icon: SvgPicture.asset(AssetsManager.cart)
-              )
+              ),
+              IconButton(onPressed: (){
+                PrefsHelper.clearToken();
+                Navigator.pushNamedAndRemoveUntil(context, RoutesManager.loginRouteName, (route) => false);
+              }, icon: Icon(Icons.logout))
             ],
           ),
           bottomNavigationBar: ClipRRect(

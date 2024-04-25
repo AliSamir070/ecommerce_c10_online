@@ -5,7 +5,6 @@ class HomeViewModel extends Cubit<HomeStates>{
   static HomeViewModel get(context)=>BlocProvider.of(context);
 
   int currentTabIndex = 0;
-
   changeTabIndex(int newIndex){
     currentTabIndex = newIndex;
     emit(HomeChangeTabState());

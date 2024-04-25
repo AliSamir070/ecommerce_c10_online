@@ -22,5 +22,8 @@ class StringsManager{
   static const String weakPassword = "Weak Password";
   static const String nameCantBeEmpty = "Name can't be empty";
   static const String notValidPhone = "Not Valid Phone";
+  static const String cart = "Cart";
+  static const String checkOut = "Check Out";
+  static const String totalPrice = "Total Price";
 
 }

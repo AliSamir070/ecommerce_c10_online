@@ -1,5 +1,7 @@
 import 'package:ecommerce_c10_online/config/theme/mytheme.dart';
+import 'package:ecommerce_c10_online/core/local/PrefsHelper.dart';
 import 'package:ecommerce_c10_online/core/utils/routes_manager.dart';
+import 'package:ecommerce_c10_online/presentation/cart/cart_screen.dart';
 import 'package:ecommerce_c10_online/presentation/home/home_screen.dart';
 import 'package:ecommerce_c10_online/presentation/login/login_screen.dart';
 import 'package:ecommerce_c10_online/presentation/register/register_screen.dart';
@@ -21,10 +23,13 @@ class MyApp extends StatelessWidget {
         routes: {
           RoutesManager.homeRouteName:(_)=>HomeScreen(),
           RoutesManager.registerRouteName:(_)=>RegisterScreen(),
-          RoutesManager.loginRouteName:(_)=>LoginScreen()
+          RoutesManager.loginRouteName:(_)=>LoginScreen(),
+          RoutesManager.cartRouteName:(_)=>CartScreen()
         },
         debugShowCheckedModeBanner: false,
-        initialRoute: RoutesManager.loginRouteName,
+        initialRoute: PrefsHelper.getToken().isNotEmpty
+            ?RoutesManager.homeRouteName
+            :RoutesManager.loginRouteName,
         theme: MyTheme.lightTheme,
       ),
     );
